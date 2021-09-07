@@ -5,17 +5,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import top.sunhanwu.cvehub.dao.AccountInfoMapper;
 import top.sunhanwu.cvehub.model.AccountInfo;
-import top.sunhanwu.cvehub.services.AuthServices;
 import top.sunhanwu.cvehub.utils.JwtUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Component
-public class JwtInterceptor implements HandlerInterceptor {
-
-    @Autowired
-    private AuthServices authServices;
+public class AuthInterceptor implements HandlerInterceptor {
 
     @Autowired
     private AccountInfoMapper accountInfoMapper;
@@ -26,7 +22,14 @@ public class JwtInterceptor implements HandlerInterceptor {
                              Object handler) throws Exception {
         String token = request.getHeader("token");
         if (token != null) {
-            String username = JwtUtil.getUserNameByToken(request);
+            String username = "";
+            try{
+                username = JwtUtil.getUserNameByToken(request);
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
             AccountInfo accountInfo = accountInfoMapper.selectByPrimaryKey(username);
             String password = accountInfo.getPassword();
             boolean verifyResult = JwtUtil.verify(token, username, password);

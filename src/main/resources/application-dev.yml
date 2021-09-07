@@ -4,10 +4,12 @@ spring:
     username: root
     password: Ydm186919
     driver-class-name: com.mysql.cj.jdbc.Driver
+  main:
+    allow-bean-definition-overriding: true
 
 logging:
   level:
-    root: DEBUG
+    root: INFO
     org:
       springframework:
         security: DEBUG
@@ -32,3 +34,4 @@ audience:
   expiresSecond: 172800
 mybatis:
   mapper-locations: classpath:mapping/*.xml
+

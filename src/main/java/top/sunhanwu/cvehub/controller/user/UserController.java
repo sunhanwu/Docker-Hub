@@ -34,4 +34,10 @@ public class UserController {
             return authResponse;
         }
     }
+
+    @GetMapping("/test")
+    public String test()
+    {
+        return "test scuess";
+    }
 }
