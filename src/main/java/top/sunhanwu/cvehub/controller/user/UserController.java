@@ -1,14 +1,18 @@
 package top.sunhanwu.cvehub.controller.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import top.sunhanwu.cvehub.bean.requests.AuthRequests;
 import top.sunhanwu.cvehub.bean.requests.RegisterRequests;
+import top.sunhanwu.cvehub.bean.requests.RetrieveRequests;
 import top.sunhanwu.cvehub.bean.response.AuthResponse;
 import top.sunhanwu.cvehub.bean.response.RegisterResponse;
+import top.sunhanwu.cvehub.bean.response.RetrieveResponse;
 import top.sunhanwu.cvehub.model.AccountInfo;
 import top.sunhanwu.cvehub.services.AuthServices;
 import top.sunhanwu.cvehub.services.RegisterServices;
+import top.sunhanwu.cvehub.services.RetrieveServices;
 
 @RestController
 public class UserController {
@@ -18,6 +22,9 @@ public class UserController {
 
     @Autowired
     private RegisterServices registerServices;
+
+    @Autowired
+    private RetrieveServices retrieveServices;
     /**
      *  auth by username and password
      * @param authRequests request body
@@ -41,6 +48,11 @@ public class UserController {
         }
     }
 
+    /**
+     * 注册账号
+     * @param registerRequests
+     * @return
+     */
     @PostMapping("/register")
     public RegisterResponse register(@RequestBody RegisterRequests registerRequests) {
         RegisterResponse registerResponse = new RegisterResponse();
@@ -78,6 +90,20 @@ public class UserController {
             return registerResponse;
         }
     }
+
+    @GetMapping("/retrieve")
+    public RetrieveResponse retrieve(@RequestBody RetrieveRequests retrieveRequests){
+        RetrieveResponse retrieveResponse;
+        retrieveResponse = retrieveServices.findPasswdByEmail(retrieveRequests.getEmail());
+        return retrieveResponse;
+    }
+
+    @GetMapping("/resetPassword/{token}")
+    public String resetPassword(@PathVariable(name = "token") String token){
+
+        return "success";
+    }
+
 
     @GetMapping("/test")
     public String test()

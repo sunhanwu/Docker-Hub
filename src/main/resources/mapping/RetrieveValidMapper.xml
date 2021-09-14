@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.sunhanwu.cvehub.dao.RetrieveValidMapper" >
+    <resultMap id="BaseResultMap" type="top.sunhanwu.cvehub.model.RetrieveValid" >
+        <id column="username" property="username" jdbcType="VARCHAR" />
+        <result column="token" property="token" jdbcType="VARCHAR" />
+        <result column="createTime" property="createTime" jdbcType="DATE" />
+        <result column="times" property="times" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    username, token, createTime, times
+  </sql>
+
+    <insert id="insert" parameterType="top.sunhanwu.cvehub.model.RetrieveValid" >
+    insert into RetrieveValid (username, token, createTime, times
+      )
+    values (#{username,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, #{times, jdbcType=INTEGER}
+      )
+  </insert>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from RetrieveValid
+        where username = #{username,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateByPrimaryKey" parameterType="top.sunhanwu.cvehub.model.RetrieveValid">
+        update RetrieveValid
+        set token = #{token, jdbcType=VARCHAR},
+        times = #{times, jdbcType=INTEGER},
+        createTime = #{createTime, jdbcType=DATE}
+        where username = #{username, jdbcType=VARCHAR}
+    </update>
+</mapper>

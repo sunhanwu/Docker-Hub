@@ -6,6 +6,10 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   main:
     allow-bean-definition-overriding: true
+  mail:
+    host: smtp.qq.com
+    username: 1965190613@qq.com
+    password: hebhziwuljaeccdh
 
 logging:
   level:
@@ -34,4 +38,6 @@ audience:
   expiresSecond: 172800
 mybatis:
   mapper-locations: classpath:mapping/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 

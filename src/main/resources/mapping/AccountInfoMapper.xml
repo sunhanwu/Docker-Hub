@@ -15,6 +15,14 @@
     from AccountInfo
     where username = #{username,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectByEmail" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from AccountInfo
+    where email = #{email, jdbcType=VARCHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from AccountInfo
     where username = #{username,jdbcType=VARCHAR}
@@ -52,7 +60,7 @@
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="top.sunhanwu.cvehub.model.AccountInfo" >
     update AccountInfo
-    <set >
+    <set>
       <if test="password != null" >
         password = #{password,jdbcType=VARCHAR},
       </if>
@@ -68,4 +76,5 @@
       email = #{email,jdbcType=VARCHAR}
     where username = #{username,jdbcType=VARCHAR}
   </update>
+
 </mapper>

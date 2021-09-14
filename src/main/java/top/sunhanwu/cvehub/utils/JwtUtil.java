@@ -10,8 +10,6 @@ import java.util.Date;
 
 public class JwtUtil {
 
-    // Token过期时间30分钟
-    public static final long EXPIRE_TIME = 30 * 60 * 1000;
 
     /* *
      * @Author lsc
@@ -44,8 +42,8 @@ public class JwtUtil {
      * @Param [username, secret]
      * @Return java.lang.String
      */
-    public static String sign(String username, String secret) {
-        Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
+    public static String sign(String username, String secret, long expireTime) {
+        Date date = new Date(System.currentTimeMillis() + expireTime);
         Algorithm algorithm = Algorithm.HMAC256(secret);
         // 附带username信息
         return JWT.create()
