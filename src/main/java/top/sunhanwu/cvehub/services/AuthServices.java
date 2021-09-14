@@ -13,11 +13,15 @@ public class AuthServices {
     @Autowired
     private AccountInfoMapper accountInfoMapper;
 
+    // Token过期时间30分钟
+    public static final long EXPIRE_TIME = 30 * 60 * 1000;
+
     public String authByUsernameAndPasswd(AuthRequests authRequests)
     {
+
         if (checkUsernameAndPasswd(authRequests.getUsername(), authRequests.getPassword()))
         {
-            String token = JwtUtil.sign(authRequests.getUsername(), authRequests.getPassword());
+            String token = JwtUtil.sign(authRequests.getUsername(), authRequests.getPassword(), EXPIRE_TIME);
             return token;
         }
         else
@@ -34,4 +38,5 @@ public class AuthServices {
         else
             return false;
     }
+
 }
