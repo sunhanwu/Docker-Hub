@@ -33,19 +33,19 @@ public class RetrieveServices {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public RetrieveResponse findPasswdByEmail(String email){
+    public RetrieveResponse findPasswdByUsername(String username){
 
         /**
          * 通过email查询用户账户信息
          */
         RetrieveResponse retrieveResponse = new RetrieveResponse();
-        List<AccountInfo> userInfos;
+        AccountInfo userInfo = null;
         try {
-            userInfos = accountInfoMapper.selectByEmail(email);
-            if(userInfos.size() != 1){
+            userInfo = accountInfoMapper.selectByPrimaryKey(username);
+            if(userInfo == null){
                 retrieveResponse.setCode(400);
-                retrieveResponse.setMsg("email not found");
-                logger.error(email + " not found or found multiple");
+                retrieveResponse.setMsg(username + " not found");
+                logger.error(username + "not found");
                 return retrieveResponse;
             }
         }
@@ -55,7 +55,6 @@ public class RetrieveServices {
             logger.error("accountInfoMapper selectByEmail error, e:"+e.getMessage());
             return retrieveResponse;
         }
-        AccountInfo userInfo = userInfos.get(0);
         /**
          * 通过账户信息生成用于修改密码的token，并存储于RetrieveValid表中
          */
@@ -81,11 +80,6 @@ public class RetrieveServices {
             return retrieveResponse;
         }
 
-    }
-
-    public RetrieveResponse findPasswdByUsername(String username){
-        RetrieveResponse retrieveResponse = new RetrieveResponse();
-        return retrieveResponse;
     }
 
     private String insertRetrieveValid(AccountInfo accountInfo){
