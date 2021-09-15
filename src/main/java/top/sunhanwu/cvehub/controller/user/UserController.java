@@ -1,17 +1,21 @@
 package top.sunhanwu.cvehub.controller.user;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import top.sunhanwu.cvehub.bean.requests.AuthRequests;
 import top.sunhanwu.cvehub.bean.requests.RegisterRequests;
+import top.sunhanwu.cvehub.bean.requests.ResetPasswordRequests;
 import top.sunhanwu.cvehub.bean.requests.RetrieveRequests;
 import top.sunhanwu.cvehub.bean.response.AuthResponse;
 import top.sunhanwu.cvehub.bean.response.RegisterResponse;
+import top.sunhanwu.cvehub.bean.response.ResetPasswordResponse;
 import top.sunhanwu.cvehub.bean.response.RetrieveResponse;
 import top.sunhanwu.cvehub.model.AccountInfo;
 import top.sunhanwu.cvehub.services.AuthServices;
 import top.sunhanwu.cvehub.services.RegisterServices;
+import top.sunhanwu.cvehub.services.ResetPasswordService;
 import top.sunhanwu.cvehub.services.RetrieveServices;
 
 @RestController
@@ -25,6 +29,11 @@ public class UserController {
 
     @Autowired
     private RetrieveServices retrieveServices;
+
+    @Autowired
+    private ResetPasswordService resetPasswordService;
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     /**
      *  auth by username and password
      * @param authRequests request body
@@ -94,13 +103,41 @@ public class UserController {
     @GetMapping("/retrieve")
     public RetrieveResponse retrieve(@RequestBody RetrieveRequests retrieveRequests){
         RetrieveResponse retrieveResponse;
-        retrieveResponse = retrieveServices.findPasswdByEmail(retrieveRequests.getEmail());
+        retrieveResponse = retrieveServices.findPasswdByUsername(retrieveRequests.getUsername());
         return retrieveResponse;
     }
 
-    @GetMapping("/resetPassword/{token}")
-    public String resetPassword(@PathVariable(name = "token") String token){
+    /**
+     * 用于忘记密码修改密码
+     * @param token
+     * @param resetPasswordRequests
+     * @return
+     */
+    @GetMapping("/resetPassword")
+    public ResetPasswordResponse resetPassword(@RequestParam String token, @RequestBody ResetPasswordRequests resetPasswordRequests){
+        ResetPasswordResponse resetPasswordResponse = new ResetPasswordResponse();
+        if(token.equals("")){
+            logger.error("Controller Get ResetPassword Error, No Token");
+            resetPasswordResponse.setCode(400);
+            resetPasswordResponse.setMsg("no token");
+            return resetPasswordResponse;
+        }
+        boolean status = resetPasswordService.resetPassword(token, resetPasswordRequests);
+        if(!status){
+            logger.warn("Controller Warn: ResetPassword Service failed");
+            resetPasswordResponse.setCode(500);
+            resetPasswordResponse.setMsg("Internal Error");
+            return resetPasswordResponse;
+        }
+        else{
+            resetPasswordResponse.setCode(200);
+            resetPasswordResponse.setMsg("Success");
+            return resetPasswordResponse;
+        }
+    }
 
+    @PostMapping("/resetPassword/{token}")
+    public String resetPassword(@PathVariable(name = "token") String token){
         return "success";
     }
 

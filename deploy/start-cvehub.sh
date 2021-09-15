@@ -14,4 +14,5 @@ fi
 # start cvehub
 cd /home/sunhanwu/cvehub/
 chmod +x ./target/cvehub-0.0.1-SNAPSHOT.jar
+rm ./nohup.out
 nohup java -jar ./target/cvehub-0.0.1-SNAPSHOT.jar &
