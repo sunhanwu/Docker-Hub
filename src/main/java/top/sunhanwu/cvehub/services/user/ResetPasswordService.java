@@ -1,4 +1,4 @@
-package top.sunhanwu.cvehub.services;
+package top.sunhanwu.cvehub.services.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

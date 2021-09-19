@@ -1,4 +1,4 @@
-package top.sunhanwu.cvehub.services;
+package top.sunhanwu.cvehub.services.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
