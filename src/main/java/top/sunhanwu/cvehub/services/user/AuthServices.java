@@ -1,4 +1,4 @@
-package top.sunhanwu.cvehub.services;
+package top.sunhanwu.cvehub.services.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ public class AuthServices {
     private AccountInfoMapper accountInfoMapper;
 
     // Token过期时间30分钟
-    public static final long EXPIRE_TIME = 30 * 60 * 1000;
+    public static final long EXPIRE_TIME = 300 * 60 * 1000;
 
     public String authByUsernameAndPasswd(AuthRequests authRequests)
     {

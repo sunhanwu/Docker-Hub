@@ -13,10 +13,10 @@ import top.sunhanwu.cvehub.bean.response.RegisterResponse;
 import top.sunhanwu.cvehub.bean.response.ResetPasswordResponse;
 import top.sunhanwu.cvehub.bean.response.RetrieveResponse;
 import top.sunhanwu.cvehub.model.AccountInfo;
-import top.sunhanwu.cvehub.services.AuthServices;
-import top.sunhanwu.cvehub.services.RegisterServices;
-import top.sunhanwu.cvehub.services.ResetPasswordService;
-import top.sunhanwu.cvehub.services.RetrieveServices;
+import top.sunhanwu.cvehub.services.user.AuthServices;
+import top.sunhanwu.cvehub.services.user.RegisterServices;
+import top.sunhanwu.cvehub.services.user.ResetPasswordService;
+import top.sunhanwu.cvehub.services.user.RetrieveServices;
 
 @RestController
 public class UserController {
