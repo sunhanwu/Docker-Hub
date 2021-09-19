@@ -1,6 +1,7 @@
 #!/bin/sh
 
-result=`ps -axu | grep -v "grep" | grep cvehub | wc -l`
+result=`ps -axu | grep -v "grep"| grep -v "start-cvehub" | grep cvehub | wc -l`
+
 if [ $result -ge 1 ]
 then
   echo "there is a exist process"
