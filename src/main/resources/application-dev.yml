@@ -42,5 +42,5 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 docker:
-  host: huawei.sunhanwu.top
+  host: 127.0.0.1
   port: 2375
