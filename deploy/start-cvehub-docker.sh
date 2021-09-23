@@ -1,6 +1,5 @@
 #!/bin/sh
 
-rm nohup.out
 echo "Ydm186919" | sudo -S docker stop cvehub
 sudo docker rm cvehub
 sudo docker build -t cvehub:v1 .
