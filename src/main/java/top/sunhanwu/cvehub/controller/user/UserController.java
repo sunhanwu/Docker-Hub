@@ -3,15 +3,13 @@ package top.sunhanwu.cvehub.controller.user;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import top.sunhanwu.cvehub.bean.requests.AuthRequests;
 import top.sunhanwu.cvehub.bean.requests.RegisterRequests;
 import top.sunhanwu.cvehub.bean.requests.ResetPasswordRequests;
 import top.sunhanwu.cvehub.bean.requests.RetrieveRequests;
-import top.sunhanwu.cvehub.bean.response.AuthResponse;
-import top.sunhanwu.cvehub.bean.response.RegisterResponse;
-import top.sunhanwu.cvehub.bean.response.ResetPasswordResponse;
-import top.sunhanwu.cvehub.bean.response.RetrieveResponse;
+import top.sunhanwu.cvehub.bean.response.*;
 import top.sunhanwu.cvehub.model.AccountInfo;
 import top.sunhanwu.cvehub.services.user.AuthServices;
 import top.sunhanwu.cvehub.services.user.RegisterServices;
@@ -39,7 +37,7 @@ public class UserController {
      * @param authRequests request body
      * @return AuthResponse response body
      */
-    @GetMapping("/auth")
+    @PostMapping("/auth")
     public AuthResponse auth(@RequestBody AuthRequests authRequests) {
         AuthResponse authResponse = new AuthResponse();
         String token = authServices.authByUsernameAndPasswd(authRequests);
@@ -54,6 +52,16 @@ public class UserController {
             authResponse.setToken(token);
             authResponse.setMsg("success");
             return authResponse;
+        }
+    }
+    @GetMapping("/isIn")
+    public String isIn(@RequestParam("username") String username) {
+        boolean isIn = authServices.isIn(username);
+        if(isIn){
+            return "true";
+        }
+        else{
+            return "false";
         }
     }
 

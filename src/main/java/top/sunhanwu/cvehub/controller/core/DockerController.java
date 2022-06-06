@@ -2,16 +2,21 @@ package top.sunhanwu.cvehub.controller.core;
 
 import com.github.dockerjava.api.model.Container;
 import com.github.dockerjava.api.model.Image;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.sunhanwu.cvehub.bean.docker.response.ListDockerContaionersResponse;
 import top.sunhanwu.cvehub.bean.docker.response.ListDockerImageResponse;
+import top.sunhanwu.cvehub.bean.response.ListImageInfoResponse;
+import top.sunhanwu.cvehub.bean.docker.requests.addContainerRequest;
+import top.sunhanwu.cvehub.model.ImageInfo;
 import top.sunhanwu.cvehub.services.core.DockerService;
+import top.sunhanwu.cvehub.services.core.ImageService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,7 +27,11 @@ public class DockerController {
     private DockerService dockerService;
 
     @Autowired
+    private ImageService imageService;
+    @Autowired
     private Environment env;
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * listImages: 查看当前所有镜像信息
@@ -71,4 +80,37 @@ public class DockerController {
         return listDockerContaionersResponse;
     }
 
+    /**
+     * listSupplyImages
+     */
+    @GetMapping("/listSupplyImages")
+    public ListImageInfoResponse listSupplyImages(@RequestParam int start, @RequestParam int num){
+        ListImageInfoResponse listImageInfoResponse = new ListImageInfoResponse();
+        List<ImageInfo> imageInfos = new ArrayList<ImageInfo>();
+        if(start < 0 || num <= 0){
+            logger.error("ListSupplyImages params error, start = " + start + " num= " + num);
+            listImageInfoResponse.setMsg("param error");
+            listImageInfoResponse.setImageInfos(imageInfos);
+            return listImageInfoResponse;
+        }
+        imageInfos = imageService.listImageInfos(start, num);
+        listImageInfoResponse.setMsg("success");
+        listImageInfoResponse.setImageInfos(imageInfos);
+        return listImageInfoResponse;
+    }
+
+    /**
+     * addSupplyImage
+     */
+    @PostMapping("/addSupplyImage")
+    public void addSupplyImage(@RequestBody ImageInfo imageInfo){
+    }
+
+    /**
+     * Create Container for someone
+     */
+    @GetMapping("/createContainer")
+    public void createContainer(@RequestBody addContainerRequest containerRequest ){
+        return;
+    }
 }
