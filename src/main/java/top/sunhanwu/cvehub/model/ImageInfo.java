@@ -3,13 +3,19 @@ package top.sunhanwu.cvehub.model;
 public class ImageInfo {
     private Long id;
 
-    private String name;
+    private Long createtime;
 
-    private String service;
+    private String hashid;
 
-    private String version;
+    private String parentid;
 
-    private Integer type;
+    private String tags;
+
+    private Long size;
+
+    private Long virtualsize;
+
+    private Integer IsShow;
 
     public Long getId() {
         return id;
@@ -19,35 +25,59 @@ public class ImageInfo {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Long getCreatetime() {
+        return createtime;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setCreatetime(Long createtime) {
+        this.createtime = createtime;
     }
 
-    public String getService() {
-        return service;
+    public String getHashid() {
+        return hashid;
     }
 
-    public void setService(String service) {
-        this.service = service == null ? null : service.trim();
+    public void setHashid(String hashid) {
+        this.hashid = hashid == null ? null : hashid.trim();
     }
 
-    public String getVersion() {
-        return version;
+    public String getParentid() {
+        return parentid;
     }
 
-    public void setVersion(String version) {
-        this.version = version == null ? null : version.trim();
+    public void setParentid(String parentid) {
+        this.parentid = parentid == null ? null : parentid.trim();
     }
 
-    public Integer getType() {
-        return type;
+    public String getTags() {
+        return tags;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setTags(String tags) {
+        this.tags = tags == null ? null : tags.trim();
+    }
+
+    public Long getSize() {
+        return size;
+    }
+
+    public void setSize(Long size) {
+        this.size = size;
+    }
+
+    public Long getVirtualsize() {
+        return virtualsize;
+    }
+
+    public void setVirtualsize(Long virtualsize) {
+        this.virtualsize = virtualsize;
+    }
+
+    public Integer getShow() {
+        return IsShow;
+    }
+
+    public void setShow(Integer show) {
+        this.IsShow = show;
     }
 }

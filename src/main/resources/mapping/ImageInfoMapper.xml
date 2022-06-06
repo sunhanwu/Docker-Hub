@@ -3,13 +3,16 @@
 <mapper namespace="top.sunhanwu.cvehub.dao.ImageInfoMapper" >
   <resultMap id="BaseResultMap" type="top.sunhanwu.cvehub.model.ImageInfo" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="service" property="service" jdbcType="VARCHAR" />
-    <result column="version" property="version" jdbcType="VARCHAR" />
-    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="BIGINT" />
+    <result column="hashId" property="hashid" jdbcType="VARCHAR" />
+    <result column="parentid" property="parentid" jdbcType="VARCHAR" />
+    <result column="tags" property="tags" jdbcType="VARCHAR" />
+    <result column="Size" property="size" jdbcType="BIGINT" />
+    <result column="VirtualSize" property="virtualsize" jdbcType="BIGINT" />
+    <result column="IsShow" property="IsShow" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, service, version, type
+    id, createtime, hashId, parentid, tags, Size, VirtualSize, IsShow
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -22,10 +25,12 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="top.sunhanwu.cvehub.model.ImageInfo" >
-    insert into ImageInfo (id, name, service, 
-      version, type)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{service,jdbcType=VARCHAR}, 
-      #{version,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER})
+    insert into ImageInfo (createtime, hashId,
+      parentid, tags, Size, 
+      VirtualSize, IsShow)
+    values (#{createtime,jdbcType=BIGINT}, #{hashid,jdbcType=VARCHAR},
+      #{parentid,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR}, #{size,jdbcType=BIGINT}, 
+      #{virtualsize,jdbcType=BIGINT}, #{IsShow,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="top.sunhanwu.cvehub.model.ImageInfo" >
     insert into ImageInfo
@@ -33,61 +38,105 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="name != null" >
-        name,
+      <if test="createtime != null" >
+        createtime,
       </if>
-      <if test="service != null" >
-        service,
+      <if test="hashid != null" >
+        hashId,
       </if>
-      <if test="version != null" >
-        version,
+      <if test="parentid != null" >
+        parentid,
       </if>
-      <if test="type != null" >
-        type,
+      <if test="tags != null" >
+        tags,
+      </if>
+      <if test="size != null" >
+        Size,
+      </if>
+      <if test="virtualsize != null" >
+        VirtualSize,
+      </if>
+      <if test="IsShow != null" >
+        IsShow
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      <if test="createtime != null" >
+        #{createtime,jdbcType=BIGINT},
       </if>
-      <if test="service != null" >
-        #{service,jdbcType=VARCHAR},
+      <if test="hashid != null" >
+        #{hashid,jdbcType=VARCHAR},
       </if>
-      <if test="version != null" >
-        #{version,jdbcType=VARCHAR},
+      <if test="parentid != null" >
+        #{parentid,jdbcType=VARCHAR},
       </if>
-      <if test="type != null" >
-        #{type,jdbcType=INTEGER},
+      <if test="tags != null" >
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        #{size,jdbcType=BIGINT},
+      </if>
+      <if test="virtualsize != null" >
+        #{virtualsize,jdbcType=BIGINT},
+      </if>
+      <if test="IsShow != null" >
+        #{IsShow,jdbcType=INTEGER}
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="top.sunhanwu.cvehub.model.ImageInfo" >
     update ImageInfo
     <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=BIGINT},
       </if>
-      <if test="service != null" >
-        service = #{service,jdbcType=VARCHAR},
+      <if test="hashid != null" >
+        hashId = #{hashid,jdbcType=VARCHAR},
       </if>
-      <if test="version != null" >
-        version = #{version,jdbcType=VARCHAR},
+      <if test="parentid != null" >
+        parentid = #{parentid,jdbcType=VARCHAR},
       </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=INTEGER},
+      <if test="tags != null" >
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        Size = #{size,jdbcType=BIGINT},
+      </if>
+      <if test="virtualsize != null" >
+        VirtualSize = #{virtualsize,jdbcType=BIGINT},
+      </if>
+      <if test="IsShow != null" >
+        IsShow = #{IsShow,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="top.sunhanwu.cvehub.model.ImageInfo" >
     update ImageInfo
-    set name = #{name,jdbcType=VARCHAR},
-      service = #{service,jdbcType=VARCHAR},
-      version = #{version,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER}
+    set createtime = #{createtime,jdbcType=BIGINT},
+      hashId = #{hashid,jdbcType=VARCHAR},
+      parentid = #{parentid,jdbcType=VARCHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      Size = #{size,jdbcType=BIGINT},
+      VirtualSize = #{virtualsize,jdbcType=BIGINT},
+      IsShow = #{IsShow,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="listAllImageInfos" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ImageInfo
+    limit #{index_left, jdbcType=INTEGER}, #{num, jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByHashId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List"/>
+    from ImageInfo
+    where hashId = #{hashId,jdbcType=VARCHAR}
+  </select>
 </mapper>

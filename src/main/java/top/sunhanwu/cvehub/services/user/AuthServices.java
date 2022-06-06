@@ -39,4 +39,14 @@ public class AuthServices {
             return false;
     }
 
+    public boolean isIn(String username){
+        AccountInfo accountInfo = accountInfoMapper.selectByPrimaryKey(username);
+        if(accountInfo == null){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
 }
