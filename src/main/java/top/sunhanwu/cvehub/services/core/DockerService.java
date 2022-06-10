@@ -1,17 +1,25 @@
 package top.sunhanwu.cvehub.services.core;
 
 import com.github.dockerjava.api.DockerClient;
+import com.github.dockerjava.api.command.PullImageCmd;
 import com.github.dockerjava.api.model.Container;
 import com.github.dockerjava.api.model.Image;
+import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientBuilder;
+import com.github.dockerjava.core.DockerClientConfig;
+import com.github.dockerjava.core.command.PullImageResultCallback;
+import org.glassfish.jersey.apache.connector.ApacheHttpClientBuilderConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PostMapping;
+import top.sunhanwu.cvehub.bean.response.BaseResponse;
 import top.sunhanwu.cvehub.dao.ImageInfoMapper;
 import top.sunhanwu.cvehub.model.ImageInfo;
 
+import java.net.http.HttpClient;
 import java.util.List;
 
 @Component
@@ -93,5 +101,29 @@ public class DockerService {
             return 500;
         }
         return 200;
+    }
+
+    public String PullImage(String imageName){
+        DockerClientConfig config = DefaultDockerClientConfig.createDefaultConfigBuilder()
+                .withDockerHost("tcp://" + env.getProperty("docker.host") + ":" + env.getProperty("docker.port"))
+                .withDockerTlsVerify(false)
+                .withDockerConfig(env.getProperty("docker.DockerConfigPath"))
+                .withRegistryUsername(env.getProperty("docker.RegistryUsername"))
+                .withRegistryPassword(env.getProperty("docker.RegistryPassword"))
+                .withRegistryEmail(env.getProperty("docker.RegistryEmail"))
+                .withRegistryUrl(env.getProperty("docker.RegistryUrl"))
+                .build();
+        DockerClient dockerClient = DockerClientBuilder.getInstance(config).build();
+        try{
+            PullImageCmd req = dockerClient.pullImageCmd(imageName);
+            PullImageResultCallback res = new PullImageResultCallback();
+            res = req.withTag("latest").exec(res);
+            res.awaitSuccess();
+        }
+        catch (Exception e){
+            logger.error("DockerService: pullImageCmd exec error, msg: " + e.getMessage());
+            return "error";
+        }
+        return "success";
     }
 }

@@ -20,7 +20,7 @@ public class test {
                 .withCmd("-itd")
                 .withName("halo")
                 .withExposedPorts(tcp8090)
-                .withPortBindings(portbindings)
+//                .withPortBindings(portbindings)
                 .exec();
     }
 }

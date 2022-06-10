@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import top.sunhanwu.cvehub.bean.requests.ResetPasswordRequests;
+import top.sunhanwu.cvehub.bean.response.FoundPasswordResponse;
+import top.sunhanwu.cvehub.bean.response.RetrieveResponse;
 import top.sunhanwu.cvehub.dao.AccountInfoMapper;
 import top.sunhanwu.cvehub.dao.RetrieveValidMapper;
 import top.sunhanwu.cvehub.model.AccountInfo;
@@ -19,6 +21,9 @@ public class ResetPasswordService {
 
     @Autowired
     private RetrieveValidMapper retrieveValidMapper;
+
+    @Autowired
+    private RetrieveServices retrieveServices;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -77,5 +82,41 @@ public class ResetPasswordService {
             return false;
         }
         return true;
+    }
+
+    public FoundPasswordResponse foundPassword(String username, String email){
+        FoundPasswordResponse foundPasswordResponse = new FoundPasswordResponse();
+        AccountInfo accountInfo = accountInfoMapper.selectByPrimaryKey(username);
+        if(accountInfo == null){
+            foundPasswordResponse.setCode(500);
+            foundPasswordResponse.setMsg("用户不存在");
+            return foundPasswordResponse;
+        }
+        if(!accountInfo.getEmail().equals(email)){
+            foundPasswordResponse.setMsg("邮箱不匹配");
+            foundPasswordResponse.setCode(500);
+            return foundPasswordResponse;
+        }
+        else{
+            RetrieveResponse retrieveResponse = null;
+            try {
+                retrieveResponse = retrieveServices.findPasswdByUsername(username);
+            }
+            catch (Exception e){
+                foundPasswordResponse.setMsg("内部错误");
+                foundPasswordResponse.setCode(500);
+                return foundPasswordResponse;
+            }
+            if (retrieveResponse.getMsg().equals("success")){
+                foundPasswordResponse.setCode(200);
+                foundPasswordResponse.setMsg("success");
+                return foundPasswordResponse;
+            }
+            else{
+                foundPasswordResponse.setCode(500);
+                foundPasswordResponse.setMsg(retrieveResponse.getMsg());
+                return foundPasswordResponse;
+            }
+        }
     }
 }

@@ -23,6 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/register")
                 .excludePathPatterns("/retrieve")
                 .excludePathPatterns("/isIn")
+                .excludePathPatterns("/foundPassword")
                 .excludePathPatterns("/resetPassword");
     }
 

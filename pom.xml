@@ -78,7 +78,7 @@
         <dependency>
             <groupId>com.github.docker-java</groupId>
             <artifactId>docker-java</artifactId>
-            <version>3.0.14</version>
+            <version>3.1.0</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -106,6 +106,25 @@
                     <verbose>true</verbose>
                     <overwrite>true</overwrite>
                     <configurationFile>src/main/resources/generator/generatorConfig.xml</configurationFile>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <useUniqueVersions>false</useUniqueVersions>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>top.sunhanwu.cvehub.CvehubApplication</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
 

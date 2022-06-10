@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
+import top.sunhanwu.cvehub.bean.docker.requests.RunContainerRequest;
 import top.sunhanwu.cvehub.bean.docker.response.ListDockerContaionersResponse;
 import top.sunhanwu.cvehub.bean.docker.response.ListDockerImageResponse;
+import top.sunhanwu.cvehub.bean.response.BaseResponse;
 import top.sunhanwu.cvehub.bean.response.ListImageInfoResponse;
 import top.sunhanwu.cvehub.bean.docker.requests.addContainerRequest;
 import top.sunhanwu.cvehub.model.ImageInfo;
@@ -18,6 +20,7 @@ import top.sunhanwu.cvehub.services.core.ImageService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/docker")
@@ -112,5 +115,25 @@ public class DockerController {
     @GetMapping("/createContainer")
     public void createContainer(@RequestBody addContainerRequest containerRequest ){
         return;
+    }
+
+    @GetMapping("/pull")
+    public BaseResponse pullImage(@RequestParam String imageName) {
+        BaseResponse baseResponse = new BaseResponse();
+        String result = dockerService.PullImage(imageName);
+        baseResponse.setMsg(result);
+        if (Objects.equals(result, "error")) {
+            baseResponse.setCode(500);
+            return baseResponse;
+        } else {
+            baseResponse.setCode(200);
+            return baseResponse;
+        }
+    }
+
+    @PostMapping("/runContainer")
+    public BaseResponse runContainer(@RequestBody RunContainerRequest runContainerRequest){
+        BaseResponse baseResponse = new BaseResponse();
+        return baseResponse;
     }
 }

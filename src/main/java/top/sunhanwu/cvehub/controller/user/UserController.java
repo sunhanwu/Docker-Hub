@@ -5,10 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import top.sunhanwu.cvehub.bean.requests.AuthRequests;
-import top.sunhanwu.cvehub.bean.requests.RegisterRequests;
-import top.sunhanwu.cvehub.bean.requests.ResetPasswordRequests;
-import top.sunhanwu.cvehub.bean.requests.RetrieveRequests;
+import top.sunhanwu.cvehub.bean.requests.*;
 import top.sunhanwu.cvehub.bean.response.*;
 import top.sunhanwu.cvehub.model.AccountInfo;
 import top.sunhanwu.cvehub.services.user.AuthServices;
@@ -92,7 +89,7 @@ public class UserController {
             accountInfo.setEmail(registerRequests.getEmail());
             if(registerServices.createAccount(accountInfo)){
                 registerResponse.setCode(200);
-                registerResponse.setMsg("success!");
+                registerResponse.setMsg("success");
                 return registerResponse;
             }
             else {
@@ -121,7 +118,7 @@ public class UserController {
      * @param resetPasswordRequests
      * @return
      */
-    @GetMapping("/resetPassword")
+    @PostMapping("/resetPassword")
     public ResetPasswordResponse resetPassword(@RequestParam String token, @RequestBody ResetPasswordRequests resetPasswordRequests){
         ResetPasswordResponse resetPasswordResponse = new ResetPasswordResponse();
         if(token.equals("")){
@@ -139,15 +136,22 @@ public class UserController {
         }
         else{
             resetPasswordResponse.setCode(200);
-            resetPasswordResponse.setMsg("Success");
+            resetPasswordResponse.setMsg("success");
             return resetPasswordResponse;
         }
     }
 
-    @PostMapping("/resetPassword/{token}")
-    public String resetPassword(@PathVariable(name = "token") String token){
-        return "success";
+    @PostMapping("/foundPassword")
+    public FoundPasswordResponse foundPassword(@RequestBody FoundPasswordRequests foundPasswordRequests){
+        FoundPasswordResponse foundPasswordResponse;
+        foundPasswordResponse = resetPasswordService.foundPassword(foundPasswordRequests.getUsername(), foundPasswordRequests.getEmail());
+        return foundPasswordResponse;
     }
+
+//    @PostMapping("/resetPassword/{token}")
+//    public String resetPassword(@PathVariable(name = "token") String token){
+//        return "success";
+//    }
 
 
     @GetMapping("/test")

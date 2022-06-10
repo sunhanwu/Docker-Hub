@@ -3,6 +3,7 @@ package top.sunhanwu.cvehub.services.user;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import top.sunhanwu.cvehub.bean.response.RetrieveResponse;
 import top.sunhanwu.cvehub.bean.utils.MailBody;
@@ -28,6 +29,8 @@ public class RetrieveServices {
     @Autowired
     private SendMail sendMail;
 
+    @Autowired
+    private Environment env;
     // Token过期时间5分钟
     public static final long EXPIRE_TIME = 5 * 60 * 1000;
 
@@ -65,6 +68,12 @@ public class RetrieveServices {
             logger.error(userInfo.getUsername() + "retrieve error");
             return retrieveResponse;
         }
+        else if(token.equals("more than 5 times")){
+            retrieveResponse.setCode(500);
+            retrieveResponse.setMsg("more than 5 times");
+            logger.error(userInfo.getUsername() + "retrieve error");
+            return retrieveResponse;
+        }
 
         /**
          * 拼接邮件内容
@@ -99,7 +108,7 @@ public class RetrieveServices {
             Date expireTIme = calendar.getTime();
             if(retrieveValid.getTimes() >= 5 && new Date().before(expireTIme)){
                 logger.warn(accountInfo.getUsername()+" The number of requests has reached the limit");
-                return "";
+                return "more than 5 times";
             }
             RetrieveValid retrieveValidNew = new RetrieveValid();
             retrieveValidNew.setUsername(accountInfo.getUsername());
@@ -145,7 +154,7 @@ public class RetrieveServices {
         mailBody.setToAddr(toEmail);
         mailBody.setSubject("cvehub密码修改申请");
         StringBuilder content = new StringBuilder();
-        String url = StaticValue.PROTOCOL + StaticValue.HOST + "/resetPassword?token="+token;
+        String url = env.getProperty("email.protocol") + env.getProperty("email.host") + ":" + env.getProperty("email.port") + "/resetPassword?token="+token;
         content.append("点击下面的链接重置密码:\n" + url);
         mailBody.setMsg(content.toString());
         return mailBody;

@@ -4,7 +4,6 @@ public class ResetPasswordRequests {
 
     private String username;
 
-    private String email;
 
     private String password;
 
@@ -16,13 +15,7 @@ public class ResetPasswordRequests {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getPassword() {
         return password;
@@ -36,7 +29,6 @@ public class ResetPasswordRequests {
     public String toString() {
         return "ResetPasswordRequests{" +
                 "username='" + username + '\'' +
-                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

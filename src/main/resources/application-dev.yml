@@ -44,3 +44,13 @@ mybatis:
 docker:
   host: 127.0.0.1
   port: 2375
+
+email:
+  host: 127.0.0.1
+  port: 8080
+  protocol: http://
+  DockerConfigPath: C:\Users\sunhanwu\.docker
+  RegistryUsername: sunhanwu
+  RegistryPassword: Ydm186919
+  RegistryEmail: 1965190613@qq.com
+  RegistryUrl: https://index.docker.io/v1/
