@@ -1,5 +1,8 @@
 package top.sunhanwu.cvehub.model;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
+
 import java.util.Date;
 
 public class RetrieveValid {

@@ -20,7 +20,7 @@ public class ContainerSetting {
      */
     private List<HashMap<String, String>> envs;
 
-    private List<String> others;
+    private List<HashMap<String, String>> others;
 
     public List<HashMap<String, String>> getPorts() {
         return ports;
@@ -46,11 +46,11 @@ public class ContainerSetting {
         this.envs = envs;
     }
 
-    public List<String> getOthers() {
+    public List<HashMap<String, String>> getOthers() {
         return others;
     }
 
-    public void setOthers(List<String> others) {
+    public void setOthers(List<HashMap<String, String>> others) {
         this.others = others;
     }
 }

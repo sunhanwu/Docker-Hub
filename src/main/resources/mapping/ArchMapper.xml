@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.sunhanwu.cvehub.dao.ArchMapper" >
+  <resultMap id="BaseResultMap" type="top.sunhanwu.cvehub.model.Arch" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="imageId" property="imageid" jdbcType="BIGINT" />
+    <result column="arch" property="arch" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, imageId, arch
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from Arch
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from Arch
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="top.sunhanwu.cvehub.model.Arch" >
+    insert into Arch (id, imageId, arch
+      )
+    values (#{id,jdbcType=BIGINT}, #{imageid,jdbcType=BIGINT}, #{arch,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="top.sunhanwu.cvehub.model.Arch" >
+    insert into Arch
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="imageid != null" >
+        imageId,
+      </if>
+      <if test="arch != null" >
+        arch,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="imageid != null" >
+        #{imageid,jdbcType=BIGINT},
+      </if>
+      <if test="arch != null" >
+        #{arch,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="top.sunhanwu.cvehub.model.Arch" >
+    update Arch
+    <set >
+      <if test="imageid != null" >
+        imageId = #{imageid,jdbcType=BIGINT},
+      </if>
+      <if test="arch != null" >
+        arch = #{arch,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="top.sunhanwu.cvehub.model.Arch" >
+    update Arch
+    set imageId = #{imageid,jdbcType=BIGINT},
+      arch = #{arch,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

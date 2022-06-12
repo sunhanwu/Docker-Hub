@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.sunhanwu.cvehub.dao.PortbindingsMapper" >
+  <resultMap id="BaseResultMap" type="top.sunhanwu.cvehub.model.Portbindings" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="innerPort" property="innerport" jdbcType="INTEGER" />
+    <result column="outerPort" property="outerport" jdbcType="INTEGER" />
+    <result column="ContainerId" property="containerid" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, innerPort, outerPort, ContainerId
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from PortBindings
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from PortBindings
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="top.sunhanwu.cvehub.model.Portbindings" >
+    insert into PortBindings (id, innerPort, outerPort, 
+      ContainerId)
+    values (#{id,jdbcType=BIGINT}, #{innerport,jdbcType=INTEGER}, #{outerport,jdbcType=INTEGER}, 
+      #{containerid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="top.sunhanwu.cvehub.model.Portbindings" >
+    insert into PortBindings
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="innerport != null" >
+        innerPort,
+      </if>
+      <if test="outerport != null" >
+        outerPort,
+      </if>
+      <if test="containerid != null" >
+        ContainerId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="innerport != null" >
+        #{innerport,jdbcType=INTEGER},
+      </if>
+      <if test="outerport != null" >
+        #{outerport,jdbcType=INTEGER},
+      </if>
+      <if test="containerid != null" >
+        #{containerid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="top.sunhanwu.cvehub.model.Portbindings" >
+    update PortBindings
+    <set >
+      <if test="innerport != null" >
+        innerPort = #{innerport,jdbcType=INTEGER},
+      </if>
+      <if test="outerport != null" >
+        outerPort = #{outerport,jdbcType=INTEGER},
+      </if>
+      <if test="containerid != null" >
+        ContainerId = #{containerid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="top.sunhanwu.cvehub.model.Portbindings" >
+    update PortBindings
+    set innerPort = #{innerport,jdbcType=INTEGER},
+      outerPort = #{outerport,jdbcType=INTEGER},
+      ContainerId = #{containerid,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

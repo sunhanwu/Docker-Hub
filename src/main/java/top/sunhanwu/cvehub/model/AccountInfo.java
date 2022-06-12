@@ -1,7 +1,12 @@
 package top.sunhanwu.cvehub.model;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
+
 public class AccountInfo {
     private String username;
+
+    private Long id;
 
     private String password;
 
@@ -13,6 +18,14 @@ public class AccountInfo {
 
     public void setUsername(String username) {
         this.username = username == null ? null : username.trim();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getPassword() {

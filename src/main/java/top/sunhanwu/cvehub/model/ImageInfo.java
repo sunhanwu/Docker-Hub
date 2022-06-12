@@ -1,21 +1,26 @@
 package top.sunhanwu.cvehub.model;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+
 public class ImageInfo {
     private Long id;
 
-    private Long createtime;
+    private String name;
 
-    private String hashid;
+    private String img;
 
-    private String parentid;
+    private String desc;
 
-    private String tags;
+    private Long time;
 
-    private Long size;
+    private Date date;
 
-    private Long virtualsize;
+    private Integer status;
 
-    private Integer IsShow;
+    private Integer isdownload;
 
     public Long getId() {
         return id;
@@ -25,59 +30,59 @@ public class ImageInfo {
         this.id = id;
     }
 
-    public Long getCreatetime() {
-        return createtime;
+    public String getName() {
+        return name;
     }
 
-    public void setCreatetime(Long createtime) {
-        this.createtime = createtime;
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
-    public String getHashid() {
-        return hashid;
+    public String getImg() {
+        return img;
     }
 
-    public void setHashid(String hashid) {
-        this.hashid = hashid == null ? null : hashid.trim();
+    public void setImg(String img) {
+        this.img = img == null ? null : img.trim();
     }
 
-    public String getParentid() {
-        return parentid;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setParentid(String parentid) {
-        this.parentid = parentid == null ? null : parentid.trim();
+    public void setDesc(String desc) {
+        this.desc = desc == null ? null : desc.trim();
     }
 
-    public String getTags() {
-        return tags;
+    public Long getTime() {
+        return time;
     }
 
-    public void setTags(String tags) {
-        this.tags = tags == null ? null : tags.trim();
+    public void setTime(Long time) {
+        this.time = time;
     }
 
-    public Long getSize() {
-        return size;
+    public Date getDate() {
+        return date;
     }
 
-    public void setSize(Long size) {
-        this.size = size;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public Long getVirtualsize() {
-        return virtualsize;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setVirtualsize(Long virtualsize) {
-        this.virtualsize = virtualsize;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    public Integer getShow() {
-        return IsShow;
+    public Integer getIsdownload() {
+        return isdownload;
     }
 
-    public void setShow(Integer show) {
-        this.IsShow = show;
+    public void setIsdownload(Integer isdownload) {
+        this.isdownload = isdownload;
     }
 }

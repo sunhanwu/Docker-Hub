@@ -4,8 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 import top.sunhanwu.cvehub.model.AccountInfo;
 
-@Component
 @Mapper
+@Component
 public interface AccountInfoMapper {
     int deleteByPrimaryKey(String username);
 

@@ -4,13 +4,18 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 import top.sunhanwu.cvehub.model.RetrieveValid;
 
-@Component
 @Mapper
+@Component
 public interface RetrieveValidMapper {
+    int deleteByPrimaryKey(String username);
 
-    int insert(RetrieveValid retrieveValid);
+    int insert(RetrieveValid record);
+
+    int insertSelective(RetrieveValid record);
 
     RetrieveValid selectByPrimaryKey(String username);
 
-    int updateByPrimaryKey(RetrieveValid retrieveValid);
+    int updateByPrimaryKeySelective(RetrieveValid record);
+
+    int updateByPrimaryKey(RetrieveValid record);
 }

@@ -3,11 +3,12 @@
 <mapper namespace="top.sunhanwu.cvehub.dao.AccountInfoMapper" >
   <resultMap id="BaseResultMap" type="top.sunhanwu.cvehub.model.AccountInfo" >
     <id column="username" property="username" jdbcType="VARCHAR" />
+    <result column="id" property="id" jdbcType="BIGINT" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    username, password, email
+    username, id, password, email
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -20,16 +21,19 @@
     where username = #{username,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="top.sunhanwu.cvehub.model.AccountInfo" >
-    insert into AccountInfo (username, password, email
-      )
-    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}
-      )
+    insert into AccountInfo (username, id, password, 
+      email)
+    values (#{username,jdbcType=VARCHAR}, #{id,jdbcType=BIGINT}, #{password,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="top.sunhanwu.cvehub.model.AccountInfo" >
     insert into AccountInfo
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="username != null" >
         username,
+      </if>
+      <if test="id != null" >
+        id,
       </if>
       <if test="password != null" >
         password,
@@ -42,6 +46,9 @@
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
       </if>
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
       <if test="password != null" >
         #{password,jdbcType=VARCHAR},
       </if>
@@ -53,6 +60,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="top.sunhanwu.cvehub.model.AccountInfo" >
     update AccountInfo
     <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=BIGINT},
+      </if>
       <if test="password != null" >
         password = #{password,jdbcType=VARCHAR},
       </if>
@@ -64,7 +74,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="top.sunhanwu.cvehub.model.AccountInfo" >
     update AccountInfo
-    set password = #{password,jdbcType=VARCHAR},
+    set id = #{id,jdbcType=BIGINT},
+      password = #{password,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR}
     where username = #{username,jdbcType=VARCHAR}
   </update>
