@@ -79,4 +79,12 @@
       email = #{email,jdbcType=VARCHAR}
     where username = #{username,jdbcType=VARCHAR}
   </update>
+
+<!--  新增通过一个record来select-->
+  <select id="select" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from AccountInfo
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
 </mapper>

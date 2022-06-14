@@ -120,7 +120,7 @@ public class DockerController {
     @GetMapping("/pull")
     public BaseResponse pullImage(@RequestParam String imageName) {
         BaseResponse baseResponse = new BaseResponse();
-        String result = dockerService.PullImage(imageName);
+        String result = dockerService.PullImage(imageName, "latest");
         baseResponse.setMsg(result);
         if (Objects.equals(result, "error")) {
             baseResponse.setCode(500);
@@ -131,9 +131,31 @@ public class DockerController {
         }
     }
 
-    @PostMapping("/runContainer")
-    public BaseResponse runContainer(@RequestBody RunContainerRequest runContainerRequest){
+    @PostMapping("/createContainer")
+    public BaseResponse createContainer(@RequestBody RunContainerRequest runContainerRequest, @RequestHeader("token") String token, @RequestHeader("userId") String userId){
+        BaseResponse baseResponse = new BaseResponse();
+        String result = dockerService.runContainer(runContainerRequest, userId, token);
+        baseResponse.setMsg(result);
+        if(result.equals("success")){
+            baseResponse.setCode(200);
+            return baseResponse;
+        }
+        baseResponse.setCode(500);
+        return baseResponse;
+    }
+
+    @GetMapping("/startContainer")
+    public BaseResponse startContainer(){
         BaseResponse baseResponse = new BaseResponse();
         return baseResponse;
     }
+
+    @GetMapping("/stopContainer")
+    public BaseResponse stopContainer(){
+        BaseResponse baseResponse = new BaseResponse();
+        return baseResponse;
+    }
+
+
+
 }

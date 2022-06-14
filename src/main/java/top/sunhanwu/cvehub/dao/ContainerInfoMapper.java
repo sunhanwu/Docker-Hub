@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 import top.sunhanwu.cvehub.model.ContainerInfo;
 
+import java.util.List;
+
 @Mapper
 @Component
 public interface ContainerInfoMapper {
@@ -18,4 +20,6 @@ public interface ContainerInfoMapper {
     int updateByPrimaryKeySelective(ContainerInfo record);
 
     int updateByPrimaryKey(ContainerInfo record);
+
+    List<ContainerInfo> selectByName(String name);
 }

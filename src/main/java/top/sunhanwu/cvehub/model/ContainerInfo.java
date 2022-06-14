@@ -12,6 +12,8 @@ public class ContainerInfo {
 
     private Long userid;
 
+    private String containerId;
+
     public Long getId() {
         return id;
     }
@@ -42,5 +44,13 @@ public class ContainerInfo {
 
     public void setUserid(Long userid) {
         this.userid = userid;
+    }
+
+    public String getContainerId() {
+        return containerId;
+    }
+
+    public void setContainerId(String containerId) {
+        this.containerId = containerId;
     }
 }

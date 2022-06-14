@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 import top.sunhanwu.cvehub.model.AccountInfo;
 
+import java.util.List;
+
 @Mapper
 @Component
 public interface AccountInfoMapper {
@@ -14,6 +16,8 @@ public interface AccountInfoMapper {
     int insertSelective(AccountInfo record);
 
     AccountInfo selectByPrimaryKey(String username);
+
+    AccountInfo selectById(String id);
 
     int updateByPrimaryKeySelective(AccountInfo record);
 

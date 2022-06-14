@@ -5,14 +5,14 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="img" property="img" jdbcType="VARCHAR" />
-    <result column="desc" property="desc" jdbcType="VARCHAR" />
+    <result column="descStr" property="descStr" jdbcType="VARCHAR" />
     <result column="time" property="time" jdbcType="BIGINT" />
     <result column="date" property="date" jdbcType="TIMESTAMP" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="isDownload" property="isdownload" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, img, desc, time, date, status, isDownload
+    id, name, img, descStr, time, date, status, isDownload
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -26,10 +26,10 @@
   </delete>
   <insert id="insert" parameterType="top.sunhanwu.cvehub.model.ImageInfo" >
     insert into ImageInfo (id, name, img, 
-      desc, time, date, 
+      descStr, time, date, 
       status, isDownload)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}, 
-      #{desc,jdbcType=VARCHAR}, #{time,jdbcType=BIGINT}, #{date,jdbcType=TIMESTAMP}, 
+      #{descStr,jdbcType=VARCHAR}, #{time,jdbcType=BIGINT}, #{date,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=INTEGER}, #{isdownload,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="top.sunhanwu.cvehub.model.ImageInfo" >
@@ -44,8 +44,8 @@
       <if test="img != null" >
         img,
       </if>
-      <if test="desc != null" >
-        desc,
+      <if test="descStr != null" >
+        descStr,
       </if>
       <if test="time != null" >
         time,
@@ -70,8 +70,8 @@
       <if test="img != null" >
         #{img,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null" >
-        #{desc,jdbcType=VARCHAR},
+      <if test="descStr != null" >
+        #{descStr,jdbcType=VARCHAR},
       </if>
       <if test="time != null" >
         #{time,jdbcType=BIGINT},
@@ -96,8 +96,8 @@
       <if test="img != null" >
         img = #{img,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null" >
-        desc = #{desc,jdbcType=VARCHAR},
+      <if test="descStr != null" >
+        descStr = #{descStr,jdbcType=VARCHAR},
       </if>
       <if test="time != null" >
         time = #{time,jdbcType=BIGINT},
@@ -118,11 +118,17 @@
     update ImageInfo
     set name = #{name,jdbcType=VARCHAR},
       img = #{img,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR},
+      descStr = #{descStr,jdbcType=VARCHAR},
       time = #{time,jdbcType=BIGINT},
       date = #{date,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER},
       isDownload = #{isdownload,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="listAllImageInfos" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ImageInfo
+    limit #{index_left, jdbcType=INTEGER}, #{num, jdbcType=INTEGER}
+  </select>
 </mapper>

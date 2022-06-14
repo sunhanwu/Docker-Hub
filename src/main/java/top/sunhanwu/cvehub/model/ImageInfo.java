@@ -12,7 +12,7 @@ public class ImageInfo {
 
     private String img;
 
-    private String desc;
+    private String descStr;
 
     private Long time;
 
@@ -46,12 +46,12 @@ public class ImageInfo {
         this.img = img == null ? null : img.trim();
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescStr() {
+        return descStr;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setDescStr(String descStr) {
+        this.descStr = descStr;
     }
 
     public Long getTime() {

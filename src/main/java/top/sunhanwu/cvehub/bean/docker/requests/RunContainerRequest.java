@@ -1,7 +1,7 @@
 package top.sunhanwu.cvehub.bean.docker.requests;
 
 public class RunContainerRequest {
-    private int imageId;
+    private Long imageId;
 
     private String name;
 
@@ -11,11 +11,11 @@ public class RunContainerRequest {
 
     private ContainerSetting containerSetting;
 
-    public int getImageId() {
+    public Long getImageId() {
         return imageId;
     }
 
-    public void setImageId(int imageId) {
+    public void setImageId(Long imageId) {
         this.imageId = imageId;
     }
 

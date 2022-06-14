@@ -6,6 +6,7 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="imageId" property="imageid" jdbcType="BIGINT" />
     <result column="userId" property="userid" jdbcType="BIGINT" />
+    <result column="containerId" property="containerId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, name, imageId, userId
@@ -22,9 +23,9 @@
   </delete>
   <insert id="insert" parameterType="top.sunhanwu.cvehub.model.ContainerInfo" >
     insert into ContainerInfo (id, name, imageId, 
-      userId)
+      userId, containerId)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{imageid,jdbcType=BIGINT}, 
-      #{userid,jdbcType=BIGINT})
+      #{userid,jdbcType=BIGINT}, #{containerId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="top.sunhanwu.cvehub.model.ContainerInfo" >
     insert into ContainerInfo
@@ -41,6 +42,9 @@
       <if test="userid != null" >
         userId,
       </if>
+      <if test="containerId != null" >
+        containerId
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -54,6 +58,9 @@
       </if>
       <if test="userid != null" >
         #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="containerId != null" >
+        #{containerId,jdbcType=VARCHAR}
       </if>
     </trim>
   </insert>
@@ -69,14 +76,24 @@
       <if test="userid != null" >
         userId = #{userid,jdbcType=BIGINT},
       </if>
+      <if test="containerId != null" >
+        userId = #{containerId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from ContainerInfo
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
   <update id="updateByPrimaryKey" parameterType="top.sunhanwu.cvehub.model.ContainerInfo" >
     update ContainerInfo
     set name = #{name,jdbcType=VARCHAR},
       imageId = #{imageid,jdbcType=BIGINT},
-      userId = #{userid,jdbcType=BIGINT}
+      userId = #{userid,jdbcType=BIGINT},
+        containerId = #{containerId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
