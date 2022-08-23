@@ -9,7 +9,7 @@ spring:
   mail:
     host: smtp.qq.com
     username: 1965190613@qq.com
-    password: hebhziwuljaeccdh
+    password: 
 
 logging:
   level:
