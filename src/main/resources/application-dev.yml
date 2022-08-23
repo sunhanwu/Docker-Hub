@@ -8,7 +8,7 @@ spring:
     allow-bean-definition-overriding: true
   mail:
     host: smtp.qq.com
-    username: 1965190613@qq.com
+    username: 
     password: 
 
 logging:
